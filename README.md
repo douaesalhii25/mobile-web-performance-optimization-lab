@@ -1,4 +1,4 @@
-# Mobile Web Performance Optimization Lab
+# Mobile Application & Web Performance Optimization Lab
 
 ## Experiment : Loading, Rendering & Code Optimization
 
@@ -47,20 +47,23 @@ for (let i = 0; i < 200; i++) {
     container.appendChild(card); // Reflow on each iteration
 }
 
-**After:**
+After:
+
+```javascript
 const fragment = document.createDocumentFragment();
 for (let i = 0; i < 200; i++) {
     fragment.appendChild(card); // No reflow
 }
 container.appendChild(fragment); // Single reflow
+```
 
-2. GPU-Accelerated Animation
+#### 2. GPU-Accelerated Animation
 
 Before: Used offsetLeft + left (forces layout recalculation)
 
 After: Used transform: translateX() (GPU accelerated, no layout thrashing)
 
-3. Font Loading Optimization
+##### 3. Font Loading Optimization
 
 Before: Standard <link> tag blocked rendering
 
@@ -68,7 +71,7 @@ After: Preconnect + media="print" trick for non-blocking font loading
 
 ---
 
-Results
+###### Results
 
 · Product load time: ~800ms → ~200ms (4x faster)
 · Animation frame rate: ~30fps → 60fps (smooth)
@@ -76,7 +79,7 @@ Results
 
 ---
 
-Tools Used
+###### Tools Used
 
 · VS Code
 · Chrome Browser
@@ -85,7 +88,7 @@ Tools Used
 
 ---
 
-How to Run
+###### How to Run
 
 1. Clone this repository
 2. Open before.html in a browser
@@ -95,27 +98,20 @@ How to Run
 
 ---
 
-Conclusion
+###### Conclusion
 
 The optimized version achieves significant performance improvements while maintaining identical visual output, proving that performance optimization enhances user experience without sacrificing design.
 
 ---
 
-Course Information
+##### Course Information
 
-· Course: Mobile applications and Performance Optimization
+· Course: Mobile Performance Optimization
 · Experiment Date: April 2026
 
----
-
-Connect with Me
-
-GitHub: douaesalhii25
 
 ---
 
 This is part of my 3rd year computer science bachelor's lab work at SWPU, China.
 
 ```
-
----
