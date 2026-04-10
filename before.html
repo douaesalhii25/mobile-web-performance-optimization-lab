@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Unoptimized - Full Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', sans-serif; padding: 20px; }
+        .card { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 8px; }
+        button { padding: 10px 20px; background: blue; color: white; border: none; border-radius: 5px; margin: 5px; }
+        .image-grid img { width: 200px; height: 150px; object-fit: cover; margin: 5px; }
+        #animatedBox { width: 50px; height: 50px; background: red; margin-top: 20px; position: relative; }
+    </style>
+</head>
+<body>
+    <h1>Product Gallery</h1>
+    <button id="loadBtn">Load Products</button>
+    <button id="animateBtn">Animate Box</button>
+    <div id="productList"></div>
+    <div id="animatedBox"></div>
+
+    <script>
+        // PROBLEM: Inefficient DOM manipulation (reflow on every iteration)
+function loadProductsBad() {
+    const container = document.getElementById('productList');
+    container.innerHTML = '';
+    
+    for (let i = 0; i < 200; i++) {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <h3>Product ${i}</h3>
+            <p>Description for product ${i}</p >
+            < img src="https://picsum.photos/200/150?random=${i}" loading="lazy">
+        `;
+        container.appendChild(card);
+    }
+}
+// PROBLEM: Layout thrashing in animation
+let position = 0;
+let animating = false;
+
+function animateBad() {
+    if (!animating) return;
+    const box = document.getElementById('animatedBox');
+    
+    for (let i = 0; i < 100; i++) {
+        const currentLeft = box.offsetLeft;
+        box.style.left = (currentLeft + 1) + 'px';
+    }
+    
+    position += 100;
+    if (position < 500) {
+        requestAnimationFrame(animateBad);
+    } else {
+        animating = false;
+    }
+}
+        document.getElementById('loadBtn').addEventListener('click', loadProductsBad);
+        document.getElementById('animateBtn').addEventListener('click', () => {
+            animating = true;
+            animateBad();
+        });
+    </script>
+</body>
+</html>
